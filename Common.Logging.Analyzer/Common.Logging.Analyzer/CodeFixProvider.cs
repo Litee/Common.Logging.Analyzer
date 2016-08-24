@@ -38,21 +38,16 @@ namespace Common.Logging.Analyzer
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
-                CodeAction.Create(title: title, createChangedDocument: c => MakeUppercaseAsync(root, context.Document, declaration, c), equivalenceKey: title),
+                CodeAction.Create(title: title, createChangedDocument: c => ReplaceMethodCallWithProperOne(root, context.Document, declaration, c), equivalenceKey: title),
                 diagnostic);
         }
 
-        private async Task<Document> MakeUppercaseAsync(SyntaxNode root, Document document, InvocationExpressionSyntax invocationExpression, CancellationToken cancellationToken)
+        private async Task<Document> ReplaceMethodCallWithProperOne(SyntaxNode root, Document document, InvocationExpressionSyntax invocationExpression, CancellationToken cancellationToken)
         {
-            // Compute new uppercase name.
             var typeDeclaration = invocationExpression.AncestorsAndSelf().OfType<TypeDeclarationSyntax>().First();
             var typeName = typeDeclaration.Identifier.ToString();
 
             var memberAccessExpr = invocationExpression.Expression as MemberAccessExpressionSyntax;
-
-            // Get the symbol representing the type to be renamed.
-            //var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
-            //var typeSymbol = semanticModel.GetDeclaredSymbol(typeDecl, cancellationToken);
 
             ExpressionSyntax newInvocationExpression;
             if (typeDeclaration.Modifiers.Any(x => x.IsKind(SyntaxKind.StaticKeyword))) {
