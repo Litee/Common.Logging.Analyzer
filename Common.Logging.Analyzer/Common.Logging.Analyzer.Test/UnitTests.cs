@@ -42,8 +42,8 @@ namespace Common.Logging.Analyzer.Test
     }";
             var expected = new DiagnosticResult
             {
-                Id = "CommonLoggingAnalyzer",
-                Message = "Do not use GetCurrentClassLogger() method - use GetLogger<> instead",
+                Id = "CommonLoggingAnalyzer100",
+                Message = "Replace GetCurrentClassLogger() with GetLogger<T>() or GetLogger(typeof(T)) for better peformance",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
@@ -81,8 +81,8 @@ namespace Common.Logging.Analyzer.Test
     }";
             var expected = new DiagnosticResult
             {
-                Id = "CommonLoggingAnalyzer",
-                Message = "Do not use GetCurrentClassLogger() method - use GetLogger<> instead",
+                Id = "CommonLoggingAnalyzer100",
+                Message = "Replace GetCurrentClassLogger() with GetLogger<T>() or GetLogger(typeof(T)) for better peformance",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
@@ -105,6 +105,63 @@ namespace Common.Logging.Analyzer.Test
             VerifyCSharpFix(analysisTest, quickFixTest, allowNewCompilerDiagnostics: true);
         }
 
+
+        [TestMethod]
+        public void ShouldPassIfTypeNameIsCorrect()
+        {
+            var analysisTest = @"
+    using System;
+
+    namespace ConsoleApplication1
+    {
+        class MyClass
+        {
+            Common.Logging.ILog Log1 = Common.Logging.LogManager.GetLogger<MyClass>();
+            Common.Logging.ILog Log2 = Common.Logging.LogManager.GetLogger(typeof(MyClass));
+        }
+    }";
+
+            VerifyCSharpDiagnostic(analysisTest);
+        }
+
+        [TestMethod]
+        public void ShouldFailIfTypeNameIsWrong()
+        {
+            var analysisTest1 = @"
+    using System;
+
+    namespace ConsoleApplication1
+    {
+        class MyClass
+        {
+            Common.Logging.ILog Log = Common.Logging.LogManager.GetLogger<SomeOtherClass>();
+        }
+    }";
+            var analysisTest2 = @"
+    using System;
+
+    namespace ConsoleApplication1
+    {
+        class MyClass
+        {
+            Common.Logging.ILog Log = Common.Logging.LogManager.GetLogger(typeof(SomeOtherClass));
+        }
+    }";
+            var expected = new DiagnosticResult
+            {
+                Id = "CommonLoggingAnalyzer101",
+                Message = "Type T in LogManager.GetLogger<T>() call should match the class in which method is called: MyClass",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+        new[] {
+                            new DiagnosticResultLocation("Test0.cs", 8, 39)
+            }
+            };
+
+            VerifyCSharpDiagnostic(analysisTest1, expected);
+            VerifyCSharpDiagnostic(analysisTest2, expected);
+        }
+
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new CommonLoggingAnalyzerCodeFixProvider();
@@ -115,4 +172,5 @@ namespace Common.Logging.Analyzer.Test
             return new CommonLoggingAnalyzer();
         }
     }
+
 }

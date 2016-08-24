@@ -18,7 +18,7 @@ namespace Common.Logging.Analyzer
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(CommonLoggingAnalyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(CommonLoggingAnalyzer.DiagnosticId100); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()

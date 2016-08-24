@@ -62,29 +62,56 @@ namespace Common.Logging.Analyzer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not use slow ILog initialization method..
+        ///   Looks up a localized string similar to Replace GetCurrentClassLogger() with GetLogger&lt;T&gt;() or GetLogger(typeof(T)) for better peformance.
         /// </summary>
-        internal static string AnalyzerDescription {
+        internal static string Analyzer100Description {
             get {
-                return ResourceManager.GetString("AnalyzerDescription", resourceCulture);
+                return ResourceManager.GetString("Analyzer100Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not use GetCurrentClassLogger() method - use GetLogger&lt;&gt; instead.
+        ///   Looks up a localized string similar to Replace GetCurrentClassLogger() with GetLogger&lt;T&gt;() or GetLogger(typeof(T)) for better peformance.
         /// </summary>
-        internal static string AnalyzerMessageFormat {
+        internal static string Analyzer100MessageFormat {
             get {
-                return ResourceManager.GetString("AnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("Analyzer100MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LogManager.GetCurrentClassLogger() method should not be used.
+        ///   Looks up a localized string similar to Replace GetCurrentClassLogger() with GetLogger&lt;T&gt;() or GetLogger(typeof(T)) for better peformance.
         /// </summary>
-        internal static string AnalyzerTitle {
+        internal static string Analyzer100Title {
             get {
-                return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
+                return ResourceManager.GetString("Analyzer100Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type T in LogManager.GetLogger&lt;T&gt;() call should match the class in which method is called.
+        /// </summary>
+        internal static string Analyzer101Description {
+            get {
+                return ResourceManager.GetString("Analyzer101Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type T in LogManager.GetLogger&lt;T&gt;() call should match the class in which method is called: {0}.
+        /// </summary>
+        internal static string Analyzer101MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer101MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type T in LogManager.GetLogger&lt;T&gt;() call should match the class in which method is called.
+        /// </summary>
+        internal static string Analyzer101Title {
+            get {
+                return ResourceManager.GetString("Analyzer101Title", resourceCulture);
             }
         }
     }
