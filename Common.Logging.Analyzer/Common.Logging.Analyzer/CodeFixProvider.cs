@@ -62,11 +62,8 @@ namespace Common.Logging.Analyzer
             {
                 newInvocationExpression = SyntaxFactory.ParseExpression("Common.Logging.LogManager.GetLogger<" + typeName + ">()");
             }
-            var newMethodName = SyntaxFactory.ParseName("GetLogger");
             var newRoot = root.ReplaceNode(invocationExpression, newInvocationExpression);
-            var newDocument = document.WithSyntaxRoot(newRoot);
-
-            return newDocument;
+            return document.WithSyntaxRoot(newRoot);
         }
     }
 }
