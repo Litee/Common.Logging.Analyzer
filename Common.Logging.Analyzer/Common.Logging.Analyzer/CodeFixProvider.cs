@@ -38,10 +38,7 @@ namespace Common.Logging.Analyzer
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
-                CodeAction.Create(
-                    title: title,
-                    createChangedDocument: c => MakeUppercaseAsync(root, context.Document, declaration, c),
-                    equivalenceKey: title),
+                CodeAction.Create(title: title, createChangedDocument: c => MakeUppercaseAsync(root, context.Document, declaration, c), equivalenceKey: title),
                 diagnostic);
         }
 
@@ -57,7 +54,14 @@ namespace Common.Logging.Analyzer
             //var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
             //var typeSymbol = semanticModel.GetDeclaredSymbol(typeDecl, cancellationToken);
 
-            var newInvocationExpression = SyntaxFactory.ParseExpression("LogManager.GetLogger<" + typeName + ">()");
+            ExpressionSyntax newInvocationExpression;
+            if (typeDeclaration.Modifiers.Any(x => x.IsKind(SyntaxKind.StaticKeyword))) {
+                newInvocationExpression = SyntaxFactory.ParseExpression("Common.Logging.LogManager.GetLogger(typeof(" + typeName + "))");
+            }
+            else
+            {
+                newInvocationExpression = SyntaxFactory.ParseExpression("Common.Logging.LogManager.GetLogger<" + typeName + ">()");
+            }
             var newMethodName = SyntaxFactory.ParseName("GetLogger");
             var newRoot = root.ReplaceNode(invocationExpression, newInvocationExpression);
             var newDocument = document.WithSyntaxRoot(newRoot);
