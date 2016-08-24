@@ -112,7 +112,7 @@ namespace Common.Logging.Analyzer.Test
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new CommonLoggingAnalyzerAnalyzer();
+            return new CommonLoggingAnalyzer();
         }
     }
 }

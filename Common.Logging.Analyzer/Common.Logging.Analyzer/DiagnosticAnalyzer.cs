@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace Common.Logging.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class CommonLoggingAnalyzerAnalyzer : DiagnosticAnalyzer
+    public class CommonLoggingAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "CommonLoggingAnalyzer";
 
