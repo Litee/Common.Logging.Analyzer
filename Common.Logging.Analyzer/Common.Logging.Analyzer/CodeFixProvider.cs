@@ -51,11 +51,25 @@ namespace Common.Logging.Analyzer
 
             ExpressionSyntax newInvocationExpression;
             if (typeDeclaration.Modifiers.Any(x => x.IsKind(SyntaxKind.StaticKeyword))) {
-                newInvocationExpression = SyntaxFactory.ParseExpression("Common.Logging.LogManager.GetLogger(typeof(" + typeName + "))");
+                //newInvocationExpression = SyntaxFactory.ParseExpression("Common.Logging.LogManager.GetLogger(typeof(" + typeName + "))");
+                newInvocationExpression = SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.IdentifierName("LoggerManager"),
+                        SyntaxFactory.IdentifierName("GetLogger")
+                    ),
+                    SyntaxFactory.ArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.TypeOfExpression(SyntaxFactory.IdentifierName(typeName)))))
+                );
             }
             else
             {
-                newInvocationExpression = SyntaxFactory.ParseExpression("Common.Logging.LogManager.GetLogger<" + typeName + ">()");
+                newInvocationExpression = SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.IdentifierName("LoggerManager"),
+                        SyntaxFactory.GenericName(SyntaxFactory.Identifier("GetLogger"), SyntaxFactory.TypeArgumentList(SyntaxFactory.SingletonSeparatedList<TypeSyntax>(SyntaxFactory.IdentifierName(typeName))))
+                    )
+                );
             }
             var newRoot = root.ReplaceNode(invocationExpression, newInvocationExpression);
             return document.WithSyntaxRoot(newRoot);

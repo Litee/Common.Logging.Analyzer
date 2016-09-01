@@ -1,0 +1,11 @@
+﻿
+    using System;
+    using Common.Logging;
+
+    namespace ConsoleApplication1
+    {
+        class MyClass
+        {
+            ILog Log = LoggerManager.GetLogger<MyClass>();
+        }
+    }

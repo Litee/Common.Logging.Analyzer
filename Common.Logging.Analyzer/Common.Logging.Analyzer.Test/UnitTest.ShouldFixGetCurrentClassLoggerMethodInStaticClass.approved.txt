@@ -1,0 +1,10 @@
+﻿
+    using System;
+
+    namespace ConsoleApplication1
+    {
+        static class MyClass
+        {
+            Common.Logging.ILog Log = LoggerManager.GetLogger(typeof(MyClass));
+        }
+    }

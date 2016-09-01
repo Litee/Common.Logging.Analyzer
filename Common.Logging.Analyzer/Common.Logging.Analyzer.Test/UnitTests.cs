@@ -1,4 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using ApprovalTests;
+using ApprovalTests.Core;
+using ApprovalTests.Reporters;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,6 +10,7 @@ using TestHelper;
 namespace Common.Logging.Analyzer.Test
 {
     [TestClass]
+    [UseReporter(typeof(DiffReporter))]
     public class UnitTest : CodeFixVerifier
     {
 
@@ -53,17 +57,48 @@ namespace Common.Logging.Analyzer.Test
 
             VerifyCSharpDiagnostic(analysisTest, expected);
 
-            var quickFixTest = @"
+            Approvals.Verify(VerifyCSharpFix(analysisTest, allowNewCompilerDiagnostics: true));
+        }
+
+        [TestMethod]
+        public void ShouldFixGetCurrentClassLoggerMethod_2()
+        {
+            var analysisTest = @"
     using System;
+    using Common.Logging;
 
     namespace ConsoleApplication1
     {
         class MyClass
         {
-            Common.Logging.ILog Log = Common.Logging.LogManager.GetLogger<MyClass>();
+            ILog Log = LogManager.GetCurrentClassLogger();
         }
     }";
-            VerifyCSharpFix(analysisTest, quickFixTest, allowNewCompilerDiagnostics: true);
+            var expected = new DiagnosticResult
+            {
+                Id = "CommonLoggingAnalyzer100",
+                Message = "Replace GetCurrentClassLogger() with GetLogger<T>() or GetLogger(typeof(T)) for better peformance",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[] {
+                            new DiagnosticResultLocation("Test0.cs", 9, 24)
+                        }
+            };
+
+            VerifyCSharpDiagnostic(analysisTest, expected);
+
+            var quickFixTest = @"
+    using System;
+    using Common.Logging;
+
+    namespace ConsoleApplication1
+    {
+        class MyClass
+        {
+            ILog Log = LogManager.GetLogger<MyClass>();
+        }
+    }";
+            Approvals.Verify(VerifyCSharpFix(analysisTest, allowNewCompilerDiagnostics: true));
         }
 
         [TestMethod]
@@ -91,18 +126,7 @@ namespace Common.Logging.Analyzer.Test
             };
 
             VerifyCSharpDiagnostic(analysisTest, expected);
-
-            var quickFixTest = @"
-    using System;
-
-    namespace ConsoleApplication1
-    {
-        static class MyClass
-        {
-            Common.Logging.ILog Log = Common.Logging.LogManager.GetLogger(typeof(MyClass));
-        }
-    }";
-            VerifyCSharpFix(analysisTest, quickFixTest, allowNewCompilerDiagnostics: true);
+            Approvals.Verify(VerifyCSharpFix(analysisTest, allowNewCompilerDiagnostics: true));
         }
 
 

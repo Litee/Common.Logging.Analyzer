@@ -1,1 +1,1 @@
-# Common.Logging.Analyzer
+Very simple Roslyn-based analyzer to highlight type name mismatches between T in LogManager.GetLogger<T>() and actual class name. Also provides detector and quick fix for replacing .GetCurrentClassLogger() call with much faster .GetLogger<T>()
