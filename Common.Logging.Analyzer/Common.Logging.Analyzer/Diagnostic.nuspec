@@ -9,8 +9,9 @@
     <licenseUrl>https://github.com/Litee/Common.Logging.Analyzer/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/Litee/Common.Logging.Analyzer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Simple Roslyn analyzer and quick fix for Common.Logging usage smells</description>
+    <description>Simple Roslyn analyzer and quick fix for Common.Logging usage smells.</description>
     <releaseNotes>
+0.2.1 - Technical version bump to sync NuGet and VSIX versions
 0.2.0 - Minor fixes to improve code fix generation. Switched tests to ApprovalTest to simplify maintenance.
 0.2.0-beta1 - Added highlight for type mismatch in GetLogger&lt;T&gt;() calls
 0.1.0-beta1 - First release. Detect and fix GetCurrentClassLogger() calls.
