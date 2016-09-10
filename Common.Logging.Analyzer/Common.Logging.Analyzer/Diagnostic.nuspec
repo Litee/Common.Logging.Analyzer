@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Common.Logging.Analyzer</id>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
     <title>Common.Logging.Analyzer</title>
     <authors>Andrey "Litee" Lipatkin</authors>
     <owners>Andrey "Litee" Lipatkin</owners>
@@ -11,6 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple Roslyn analyzer and quick fix for Common.Logging usage smells.</description>
     <releaseNotes>
+0.2.2 - Bug fix
 0.2.1 - Technical version bump to sync NuGet and VSIX versions
 0.2.0 - Minor fixes to improve code fix generation. Switched tests to ApprovalTest to simplify maintenance.
 0.2.0-beta1 - Added highlight for type mismatch in GetLogger&lt;T&gt;() calls

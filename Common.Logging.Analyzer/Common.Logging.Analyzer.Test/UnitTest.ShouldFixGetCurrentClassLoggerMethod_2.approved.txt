@@ -6,6 +6,6 @@
     {
         class MyClass
         {
-            ILog Log = LoggerManager.GetLogger<MyClass>();
+            ILog Log = LogManager.GetLogger<MyClass>();
         }
     }

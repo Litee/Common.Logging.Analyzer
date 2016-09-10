@@ -5,6 +5,6 @@
     {
         static class MyClass
         {
-            Common.Logging.ILog Log = LoggerManager.GetLogger(typeof(MyClass));
+            Common.Logging.ILog Log = LogManager.GetLogger(typeof(MyClass));
         }
     }

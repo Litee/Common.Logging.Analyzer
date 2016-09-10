@@ -5,6 +5,6 @@
     {
         class MyClass
         {
-            Common.Logging.ILog Log = LoggerManager.GetLogger<MyClass>();
+            Common.Logging.ILog Log = LogManager.GetLogger<MyClass>();
         }
     }

@@ -55,7 +55,7 @@ namespace Common.Logging.Analyzer
                 newInvocationExpression = SyntaxFactory.InvocationExpression(
                     SyntaxFactory.MemberAccessExpression(
                         SyntaxKind.SimpleMemberAccessExpression,
-                        SyntaxFactory.IdentifierName("LoggerManager"),
+                        SyntaxFactory.IdentifierName("LogManager"),
                         SyntaxFactory.IdentifierName("GetLogger")
                     ),
                     SyntaxFactory.ArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.TypeOfExpression(SyntaxFactory.IdentifierName(typeName)))))
@@ -66,7 +66,7 @@ namespace Common.Logging.Analyzer
                 newInvocationExpression = SyntaxFactory.InvocationExpression(
                     SyntaxFactory.MemberAccessExpression(
                         SyntaxKind.SimpleMemberAccessExpression,
-                        SyntaxFactory.IdentifierName("LoggerManager"),
+                        SyntaxFactory.IdentifierName("LogManager"),
                         SyntaxFactory.GenericName(SyntaxFactory.Identifier("GetLogger"), SyntaxFactory.TypeArgumentList(SyntaxFactory.SingletonSeparatedList<TypeSyntax>(SyntaxFactory.IdentifierName(typeName))))
                     )
                 );
