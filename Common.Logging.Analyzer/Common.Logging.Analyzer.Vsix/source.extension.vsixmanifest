@@ -21,6 +21,5 @@
   </Assets>
   <Prerequisites>
     <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.Compiler" Version="[15.0.26004.1,16.0)" DisplayName="C# and Visual Basic Roslyn compilers" />
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.26004.1,16.0)" DisplayName="Visual Studio core editor" />
   </Prerequisites>
 </PackageManifest>
